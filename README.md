@@ -33,6 +33,9 @@ Our custom routing engine (`api/agent.js`) parses natural language inputs and pi
 >    └───→ [Advisor Agent] (Aggregates reports and returns a structured financial recommendation)
 > ```
 
+> **AI Financial Copilot Dialogue Preview**:
+> ![Multi-Agent Financial Copilot Chat Dialog](public/images/financial_copilot.png)
+
 ### 2. 🔌 Model Context Protocol (MCP) Integration
 A fully compliant MCP Server (`mcp-server.js`) exposes **12 financial tools** with strict schema validation, allowing third-party tools (like Cursor, Claude Desktop, or Windsurf) to connect directly to the PocketSense database.
 
@@ -78,6 +81,18 @@ graph TD
     MCP --> JSON_DB[(JSON Database Engine /tmp)]
     JSON_DB --> Backups[(Timestamped Backups)]
 ```
+
+## 📸 Live Platform Previews
+
+### 📊 1. Personal CFO Overview Dashboard
+The command center displaying real-time financial health, budget pacing, asset allocation, and predictive spending curves.
+
+![Personal CFO Overview Dashboard](public/images/dashboard_overview.png)
+
+### 👩‍⚖️ 2. Dedicated Judges Console
+Our auto-evaluating compliance scorecard. Runs a full 45-second platform demonstration loop, tracks latency telemetry for all 9 agents, and logs live MCP tool invocations.
+
+![Kaggle & Google Capstone Judges Console](public/images/judges_console.png)
 
 ---
 
