@@ -225,7 +225,7 @@ Add this server block to your Claude Desktop configuration file:
   "mcpServers": {
     "pocketsense-ai": {
       "command": "node",
-      "args": ["c:/Users/hp/OneDrive/Desktop/pocketsense-ai capstoneproject/mcp-server.js"],
+      "args": ["/absolute/path/to/PocketSense-AI/mcp-server.js"],
       "env": {
         "GEMINI_API_KEY": "YOUR_GEMINI_API_KEY_HERE"
       }
@@ -240,7 +240,7 @@ Add this server block to your Claude Desktop configuration file:
 3. Fill details:
    *   **Name**: PocketSense AI
    *   **Type**: `stdio`
-   *   **Command**: `node "c:/Users/hp/OneDrive/Desktop/pocketsense-ai capstoneproject/mcp-server.js"`
+   *   **Command**: `node "/absolute/path/to/PocketSense-AI/mcp-server.js"`
 4. Save and ensure the status circle turns green.
 
 ---
