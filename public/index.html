@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSense AI – Autonomous Financial Intelligence Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="dark-mode">
+    <div class="app-layout">
+        <!-- Collapsible Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="sidebar-brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-brain text-glow"></i>
+                </div>
+                <h2>PocketSense <span class="ai-badge">AI</span></h2>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <button class="menu-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i> <span>Overview</span>
+                </button>
+                <button class="menu-item" data-tab="transactions">
+                    <i class="fa-solid fa-list-check"></i> <span>Transactions</span>
+                </button>
+                <button class="menu-item" data-tab="budget">
+                    <i class="fa-solid fa-scale-balanced"></i> <span>Budgets</span>
+                </button>
+                <button class="menu-item" data-tab="goals">
+                    <i class="fa-solid fa-bullseye"></i> <span>Goal Planner</span>
+                </button>
+                <button class="menu-item" data-tab="receipt">
+                    <i class="fa-solid fa-receipt"></i> <span>Receipt Scanner</span>
+                </button>
+                <button class="menu-item" data-tab="cfo">
+                    <i class="fa-solid fa-briefcase"></i> <span>AI CFO Report</span>
+                </button>
+                <button class="menu-item" data-tab="advisor">
+                    <i class="fa-solid fa-user-tie"></i> <span>AI Insights</span>
+                </button>
+                <button class="menu-item control-item" data-tab="control">
+                    <i class="fa-solid fa-sliders"></i> <span class="accent-glow">Control Center</span>
+                </button>
+                <button class="menu-item judges-btn" data-tab="judges" style="border: 1px solid rgba(245,158,11,0.25); background: rgba(245,158,11,0.04); margin-top: 10px;">
+                    <i class="fa-solid fa-gavel warning-color"></i> <span class="warning-color" style="font-weight:600; text-shadow:0 0 10px rgba(245,158,11,0.2);">Judges Panel</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-status-container" style="padding: 16px; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid rgba(255,255,255,0.05); margin-top:auto;">
+                <div class="sidebar-status" style="margin: 0; padding: 0;">
+                    <div class="status-indicator online" id="mcp-status-dot"></div>
+                    <div class="status-details">
+                        <p class="status-title">MCP Server Host</p>
+                        <p class="status-sub">12 Tools Connected</p>
+                    </div>
+                </div>
+                <div class="sidebar-status" style="margin: 0; padding: 0;">
+                    <div class="status-indicator online" id="ai-status-dot"></div>
+                    <div class="status-details">
+                        <p class="status-title" id="ai-status-title">AI Engine: Online</p>
+                        <p class="status-sub" id="ai-status-subtitle">Gemini 2.5 Active</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="top-header">
+                <button class="sidebar-toggle-btn" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="globalSearchInput" placeholder="Search notes globally...">
+                </div>
+                <div class="header-actions">
+                    <div class="demo-switch-container" style="display: flex; align-items: center; gap: 8px; margin-right: 12px; background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                        <i class="fa-solid fa-flask" style="color: var(--accent); font-size: 13px;"></i>
+                        <span style="font-size: 11px; font-weight: 600; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px;">Demo Mode</span>
+                        <label class="switch" style="position: relative; display: inline-block; width: 34px; height: 20px; margin: 0;">
+                            <input type="checkbox" id="demoModeToggle" style="opacity: 0; width: 0; height: 0;">
+                            <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.15); transition: .3s; border-radius: 34px;"></span>
+                        </label>
+                    </div>
+                    <button class="quick-add-btn" id="openAddExpenseBtn">
+                        <i class="fa-solid fa-plus"></i> Log Outlay
+                    </button>
+                    <button class="theme-toggle-btn" id="themeToggle">
+                        <i class="fa-solid fa-sun"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                
+                <!-- Smart Alert Banner -->
+                <div class="alert-banner-container" id="smartAlertBanner">
+                    <!-- Dynamic Alert notifications -->
+                </div>
+
+                <!-- TAB 1: EXECUTIVE DASHBOARD OVERVIEW -->
+                <section class="tab-panel active" id="dashboard-panel">
+                    <div class="section-title">
+                        <h1>Autonomous Financial Intelligence</h1>
+                        <p>Real-time analytics and predictive financial telemetry</p>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card glassmorphism">
+                            <div class="metric-header">
+                                <span>Total Spending</span>
+                                <i class="fa-solid fa-arrow-trend-up danger-color"></i>
+                            </div>
+                            <h3 class="metric-value" id="dash-spent">₹0</h3>
+                            <p class="metric-sub" id="dash-count">0 outlays logged</p>
+                        </div>
+
+                        <div class="metric-card glassmorphism">
+                            <div class="metric-header">
+                                <span>Total Savings</span>
+                                <i class="fa-solid fa-piggy-bank success-color"></i>
+                            </div>
+                            <h3 class="metric-value" id="dash-saved">₹0</h3>
+                            <p class="metric-sub">Current Reserve</p>
+                        </div>
+
+                        <div class="metric-card glassmorphism">
+                            <div class="metric-header">
+                                <span>Budget Remaining</span>
+                                <i class="fa-solid fa-circle-dollar-to-slot accent-color"></i>
+                            </div>
+                            <h3 class="metric-value" id="dash-remaining">₹0</h3>
+                            <p class="metric-sub" id="dash-remaining-pct">0% left</p>
+                        </div>
+
+                        <div class="metric-card glassmorphism">
+                            <div class="metric-header">
+                                <span>Active Budget</span>
+                                <i class="fa-solid fa-bullseye warning-color"></i>
+                            </div>
+                            <h3 class="metric-value" id="dash-budget">₹0</h3>
+                            <p class="metric-sub">Global Limit</p>
+                        </div>
+
+                        <div class="metric-card glassmorphism health-score-card">
+                            <div class="metric-header">
+                                <span>AI CFO Score</span>
+                                <i class="fa-solid fa-shield-heart success-color"></i>
+                            </div>
+                            <div class="health-display">
+                                <div class="health-gauge-container">
+                                    <svg class="progress-ring" width="70" height="70">
+                                        <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="transparent" r="28" cx="35" cy="35"/>
+                                        <circle class="progress-ring__circle" stroke="#00D4FF" stroke-width="6" fill="transparent" r="28" cx="35" cy="35" id="health-ring"/>
+                                    </svg>
+                                    <div class="health-score-val" id="health-score">0</div>
+                                </div>
+                                <div class="health-text">
+                                    <h4 id="health-grade">Calculating...</h4>
+                                    <p id="health-summary">Calibrating indicators</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Widgets Grid -->
+                    <div class="widgets-row">
+                        <!-- Forecast Card -->
+                        <div class="widget-card glassmorphism">
+                            <h3><i class="fa-solid fa-chart-line accent-color"></i> Spending Forecast</h3>
+                            <div class="forecast-content">
+                                <div class="forecast-item">
+                                    <span class="lbl">Month-End Estimate</span>
+                                    <span class="val" id="fore-month-spent">₹0</span>
+                                </div>
+                                <div class="forecast-item">
+                                    <span class="lbl">Budget Exhaustion</span>
+                                    <span class="val highlighted" id="fore-exhaust-date">N/A</span>
+                                </div>
+                                <div class="forecast-item">
+                                    <span class="lbl">Savings Velocity</span>
+                                    <span class="val" id="fore-daily-velocity">₹0 / day</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Goals Card -->
+                        <div class="widget-card glassmorphism">
+                            <h3><i class="fa-solid fa-bullseye success-color"></i> Goals Progress</h3>
+                            <div class="goals-content-list" id="dash-goals-list">
+                                <!-- Goals indicators -->
+                            </div>
+                        </div>
+
+                        <!-- Risk Card -->
+                        <div class="widget-card glassmorphism">
+                            <h3><i class="fa-solid fa-triangle-exclamation warning-color"></i> Risk Outlook</h3>
+                            <div class="risk-content">
+                                <div class="risk-level-badge" id="dash-risk-badge">Low Risk</div>
+                                <p class="risk-desc" id="dash-risk-desc">No overruns found.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Charts Section -->
+                    <div class="charts-section-grid">
+                        <div class="chart-container-card glassmorphism">
+                            <div class="chart-header">
+                                <h3>Spending Trend</h3>
+                                <span class="chart-tag">Line Chart</span>
+                            </div>
+                            <div class="canvas-wrap">
+                                <canvas id="chartTrend"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container-card glassmorphism">
+                            <div class="chart-header">
+                                <h3>Weekly Spending Ratios</h3>
+                                <span class="chart-tag">Bar Chart</span>
+                            </div>
+                            <div class="canvas-wrap">
+                                <canvas id="chartWeekly"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container-card glassmorphism">
+                            <div class="chart-header">
+                                <h3>Category Share</h3>
+                                <span class="chart-tag">Doughnut</span>
+                            </div>
+                            <div class="canvas-wrap">
+                                <canvas id="chartCategory"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container-card glassmorphism">
+                            <div class="chart-header">
+                                <h3>Budget vs Actual</h3>
+                                <span class="chart-tag">Grouped Bar</span>
+                            </div>
+                            <div class="canvas-wrap">
+                                <canvas id="chartBudgetActual"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container-card glassmorphism">
+                            <div class="chart-header">
+                                <h3>Financial Health Score Trend</h3>
+                                <span class="chart-tag">Line Graph</span>
+                            </div>
+                            <div class="canvas-wrap">
+                                <canvas id="chartHealthTrend"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container-card glassmorphism">
+                            <div class="chart-header">
+                                <h3>Forecast Projection Curve</h3>
+                                <span class="chart-tag">Dotted Projection</span>
+                            </div>
+                            <div class="canvas-wrap">
+                                <canvas id="chartForecastCurve"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table & AI Telemetry dashboard lower split -->
+                    <div class="dashboard-split">
+                        <div class="table-card glassmorphism">
+                            <div class="table-card-header">
+                                <h3>Recent Transactions</h3>
+                                <button class="link-btn" id="viewAllBtnDashboard">View All</button>
+                            </div>
+                            <div class="table-container">
+                                <table id="dash-recent-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic entries -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="widget-card glassmorphism">
+                            <h3><i class="fa-solid fa-sparkles text-glow"></i> Recent AI Insights</h3>
+                            <div class="recommendations-container" id="dash-insights-list">
+                                <!-- Insights -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: TRANSACTIONS (CRUD with search, filter, sort, paginate) -->
+                <section class="tab-panel" id="transactions-panel">
+                    <div class="section-title">
+                        <h1>Transactions Ledger</h1>
+                        <p>Complete record audit log, search queries, pagination, and direct updates</p>
+                    </div>
+
+                    <div class="toolbar-bar glassmorphism">
+                        <div class="toolbar-item search-group">
+                            <label>Note Search</label>
+                            <input type="text" id="transSearch" placeholder="Search note...">
+                        </div>
+                        <div class="toolbar-item filter-group">
+                            <label>Category Filter</label>
+                            <select id="transCategoryFilter">
+                                <option value="all">All Categories</option>
+                                <option value="Food">Food</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Health">Health</option>
+                                <option value="Education">Education</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-item sort-group">
+                            <label>Sort By</label>
+                            <select id="transSortBy">
+                                <option value="date-desc">Newest First</option>
+                                <option value="date-asc">Oldest First</option>
+                                <option value="amount-desc">Highest Cost</option>
+                                <option value="amount-asc">Lowest Cost</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-card glassmorphism full-width-card">
+                        <div class="table-container">
+                            <table id="full-transactions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Category</th>
+                                        <th>Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic entries -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-bar">
+                            <span class="pagination-info" id="pagination-info">Showing 0-0 of 0</span>
+                            <div class="pagination-controls">
+                                <button class="secondary-btn" id="prevPageBtn"><i class="fa-solid fa-angle-left"></i> Previous</button>
+                                <button class="secondary-btn" id="nextPageBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: BUDGET MANAGER -->
+                <section class="tab-panel" id="budget-panel">
+                    <div class="section-title">
+                        <h1>Budget Control</h1>
+                        <p>Configure global limits and category-wise spending restraints</p>
+                    </div>
+
+                    <div class="budget-layout">
+                        <!-- Set budgets panel -->
+                        <div class="budget-panel-card glassmorphism">
+                            <h3>Modify Budget Constraints</h3>
+                            <p class="desc-para">Update limits to align spending metrics with active targets.</p>
+                            
+                            <form id="budgetSettingForm" class="budget-form">
+                                <div class="budget-input-group">
+                                    <label>Global Monthly Budget (₹)</label>
+                                    <div class="form-input-currency">
+                                        <span>₹</span>
+                                        <input type="number" id="budget-global" placeholder="e.g. 25000" required>
+                                    </div>
+                                </div>
+
+                                <div class="category-budget-inputs">
+                                    <h4>Category Spending Caps</h4>
+                                    <div class="category-inputs-grid">
+                                        <div class="cat-input-item"><label>Food</label><input type="number" id="budget-cat-Food"></div>
+                                        <div class="cat-input-item"><label>Transport</label><input type="number" id="budget-cat-Transport"></div>
+                                        <div class="cat-input-item"><label>Shopping</label><input type="number" id="budget-cat-Shopping"></div>
+                                        <div class="cat-input-item"><label>Entertainment</label><input type="number" id="budget-cat-Entertainment"></div>
+                                        <div class="cat-input-item"><label>Bills</label><input type="number" id="budget-cat-Bills"></div>
+                                        <div class="cat-input-item"><label>Health</label><input type="number" id="budget-cat-Health"></div>
+                                        <div class="cat-input-item"><label>Education</label><input type="number" id="budget-cat-Education"></div>
+                                        <div class="cat-input-item"><label>Other</label><input type="number" id="budget-cat-Other"></div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="primary-btn" id="saveBudgetBtn">Update Constraints</button>
+                            </form>
+                        </div>
+
+                        <!-- Progress visualisers -->
+                        <div class="budget-panel-card glassmorphism progress-meters-card">
+                            <h3>Category Spent Allocations</h3>
+                            <div class="category-progress-list" id="category-progress-list">
+                                <!-- Category progress bars -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 4: GOAL PLANNER -->
+                <section class="tab-panel" id="goals-panel">
+                    <div class="section-title">
+                        <h1>Savings Goals Planner</h1>
+                        <p>Track targets, project timelines, and calculate success probabilities</p>
+                    </div>
+
+                    <div class="goals-layout">
+                        <!-- Add goal panel -->
+                        <div class="goal-form-card glassmorphism">
+                            <h3>Create Savings Target</h3>
+                            <form id="goalCreationForm" class="modal-form">
+                                <div class="form-item">
+                                    <label>Goal Title</label>
+                                    <input type="text" id="goal-title" placeholder="e.g. New iPad, Emergency Reserve" required>
+                                </div>
+                                <div class="form-item">
+                                    <label>Target Amount (₹)</label>
+                                    <input type="number" id="goal-target" placeholder="0.00" required>
+                                </div>
+                                <div class="form-item">
+                                    <label>Current Saved (₹)</label>
+                                    <input type="number" id="goal-current" placeholder="0.00" value="0">
+                                </div>
+                                <div class="form-item">
+                                    <label>Target Deadline Date</label>
+                                    <input type="date" id="goal-date" required>
+                                </div>
+                                <button type="submit" class="primary-btn">Log Saving Goal</button>
+                            </form>
+                        </div>
+
+                        <!-- Goal progress cards list -->
+                        <div class="goals-list-card" id="goals-full-list">
+                            <!-- Goals cards with probabilities and dates -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 5: RECEIPT VISION SCANNER 2.0 -->
+                <section class="tab-panel" id="receipt-panel">
+                    <div class="section-title">
+                        <h1>Receipt Vision OCR 2.0</h1>
+                        <p>Upload a document to extract merchant, total cost, tax, line items, and categories</p>
+                    </div>
+
+                    <div class="receipt-scanner-grid">
+                        <div class="scanner-card glassmorphism">
+                            <div class="drag-drop-zone" id="ocrDragZone">
+                                <i class="fa-solid fa-cloud-arrow-up cloud-icon"></i>
+                                <h3>Drag & Drop Receipt Document</h3>
+                                <p>Supports JPG, JPEG, PNG formats</p>
+                                <span class="browse-anchor">or browse local files</span>
+                                <input type="file" id="ocrFileInput" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="image-preview-zone" id="ocrPreviewZone" style="display: none;">
+                                <img src="" alt="Receipt Preview" id="ocrImagePreview">
+                                <div class="image-preview-actions">
+                                    <button class="secondary-btn" id="ocrRemoveBtn">Cancel</button>
+                                    <button class="primary-btn" id="ocrProcessBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Process OCR Vision 2.0</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scanner-card glassmorphism details-display-card">
+                            <h3>OCR 2.0 Parsing Results</h3>
+                            <div class="ocr-telemetry" id="ocrTelemetry">
+                                <div class="ocr-idle-screen">
+                                    <i class="fa-solid fa-receipt"></i>
+                                    <p>Scan a document to see line itemized extractions and confidence logs.</p>
+                                </div>
+                                <div class="ocr-loading-screen" style="display: none;">
+                                    <div class="loading-ring-spinner"></div>
+                                    <p>Gemini Vision Agent reading lines, taxes, and values...</p>
+                                </div>
+                                <div class="ocr-success-screen" style="display: none;">
+                                    <div class="extracted-success-badge" id="ocr-conf-badge">
+                                        <i class="fa-solid fa-circle-check"></i> Extracted & Saved (Confidence: 0%)
+                                    </div>
+                                    <div class="ocr-values-display">
+                                        <div class="ocr-val-item">
+                                            <span class="lbl">Merchant</span>
+                                            <span class="val" id="extracted-merchant">N/A</span>
+                                        </div>
+                                        <div class="ocr-val-item">
+                                            <span class="lbl">Total Bill Amount</span>
+                                            <span class="val highlighted" id="extracted-amount">₹0.00</span>
+                                        </div>
+                                        <div class="ocr-val-item">
+                                            <span class="lbl">Suggested Category</span>
+                                            <span class="val" id="extracted-category">N/A</span>
+                                        </div>
+                                        <div class="ocr-val-item">
+                                            <span class="lbl">Extracted Taxes</span>
+                                            <span class="val" id="extracted-tax">₹0.00</span>
+                                        </div>
+                                        <div class="ocr-val-item line-items-list-wrapper">
+                                            <span class="lbl">Itemized Prices</span>
+                                            <div class="items-bullet-list" id="extracted-items-list">
+                                                <!-- items -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 6: AI CFO EXECUTIVE REPORT -->
+                <section class="tab-panel" id="cfo-panel">
+                    <div class="section-title">
+                        <h1>AI CFO Executive Center</h1>
+                        <p>Generate institutional-grade monthly financial reviews</p>
+                    </div>
+
+                    <div class="cfo-layout glassmorphism">
+                        <div class="cfo-report-header">
+                            <div class="report-brand">
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                <h3>PocketSense AI CFO Report</h3>
+                            </div>
+                            <button class="primary-btn" id="generateCFOReportBtn">Generate Monthly Report</button>
+                        </div>
+                        <div class="cfo-report-body" id="cfoReportContent">
+                            <div class="ocr-idle-screen" style="padding: 40px 0;">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <p>Click the button above to request a professional Cash Flow & Risk report from your AI CFO Agent.</p>
+                            </div>
+                            <!-- Rendered Report -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 7: AI INSIGHTS (Interactive Chat Interface) -->
+                <section class="tab-panel" id="advisor-panel">
+                    <div class="section-title">
+                        <h1>AI Financial Copilot</h1>
+                        <p>Context-aware advisor powered by multi-agent chaining</p>
+                    </div>
+
+                    <div class="copilot-layout">
+                        <!-- Left panel: Health metrics -->
+                        <div class="advisor-left-panel">
+                            <div class="advice-factors-card glassmorphism">
+                                <h3>Health Breakdown Factors</h3>
+                                <div class="health-breakdowns-list" id="advisor-health-factors">
+                                    <!-- Factors -->
+                                </div>
+                            </div>
+                            <div class="advice-factors-card glassmorphism flex-grow">
+                                <h3>Savings Strategies</h3>
+                                <div class="custom-tips-list" id="advisor-savings-tips">
+                                    <!-- Saving tips -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Sidebar (Web UI Interface version) -->
+                        <div class="chat-interface-card glassmorphism">
+                            <div class="chat-interface-header">
+                                <div class="title">
+                                    <i class="fa-solid fa-sparkles text-glow"></i>
+                                    <h3>Assistant Stream</h3>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-conversation" id="advisorChatMessages">
+                                <div class="bubble-msg assistant">
+                                    <p>Welcome to PocketSense AI Copilot! I coordinate a group of specialized agents to oversee your finances.</p>
+                                    <p>Ask a financial question, request budget suggestions, or report spending logs:</p>
+                                    <ul>
+                                        <li>"Can I afford a MacBook Pro in 3 months?"</li>
+                                        <li>"What are my spending risk levels?"</li>
+                                        <li>"Give me 3 savings suggestions"</li>
+                                        <li>"I spent 1500 on dinner at Olive Garden"</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="chat-input-row">
+                                <div class="chat-input-container">
+                                    <textarea id="advisorChatInput" placeholder="Message financial advisor..." rows="1"></textarea>
+                                    <button class="chat-submit-btn" id="advisorChatSendBtn">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 8: AGENT CONTROL CENTER (WOW FACTOR DEVELOPER CONSOLE) -->
+                <section class="tab-panel" id="control-panel">
+                    <div class="section-title">
+                        <h1>Agent Control Center</h1>
+                        <p>Real-time developer console monitoring active agents, routing chains, and MCP tool invocations</p>
+                    </div>
+
+                    <div class="control-grid">
+                        <!-- Agent Flow Diagram -->
+                        <div class="control-card glassmorphism flowchart-card">
+                            <h3>Autonomous Multi-Agent Routing Map</h3>
+                            <p class="desc-para" style="margin-bottom: 24px;">Observe nodes lighting up sequentially in real-time as the Router chains execution blocks.</p>
+                            
+                            <div class="agent-nodes-map" id="agentNodesMap">
+                                <div class="agent-node-wrapper">
+                                    <div class="agent-node" id="node-router">
+                                        <i class="fa-solid fa-network-wired"></i>
+                                        <span>Router Agent</span>
+                                    </div>
+                                </div>
+                                <div class="flow-connect-line vertical-line"></div>
+                                <div class="agent-nodes-horizontal">
+                                    <div class="agent-node" id="node-goal">
+                                        <i class="fa-solid fa-bullseye"></i>
+                                        <span>Goal Agent</span>
+                                    </div>
+                                    <div class="agent-node" id="node-forecast">
+                                        <i class="fa-solid fa-chart-line"></i>
+                                        <span>Forecast Agent</span>
+                                    </div>
+                                    <div class="agent-node" id="node-risk">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                        <span>Risk Agent</span>
+                                    </div>
+                                    <div class="agent-node" id="node-advisor">
+                                        <i class="fa-solid fa-user-tie"></i>
+                                        <span>Advisor Agent</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tool log & timeline -->
+                        <div class="control-card glassmorphism timeline-logs-card">
+                            <h3>Routing Execution Timeline</h3>
+                            <div class="execution-timeline-wrapper" id="executionTimeline">
+                                <div class="timeline-empty-state">
+                                    <i class="fa-solid fa-code-fork"></i>
+                                    <p>Ask the AI Insights Copilot a question to view execution telemetry.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MCP logs -->
+                        <div class="control-card glassmorphism full-width-card mcp-table-card">
+                            <h3>MCP Tool Invocation Logs</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>JSON-RPC Tool</th>
+                                            <th>Parameters</th>
+                                            <th>Result Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mcpToolLogs">
+                                        <tr>
+                                            <td colspan="4" class="text-center">No active MCP invocations recorded.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 9: dedicated judges panel (HACKATHON VERIFICATION SYSTEM) -->
+                <section class="tab-panel" id="judges-panel">
+                    <div class="section-title judges-header-flex" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+                        <div>
+                            <h1 style="color: var(--warning); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-gavel"></i> Capstone Judges Console</h1>
+                            <p>Verify multi-agent orchestrations, MCP server integrations, and run 45-second Auto Demonstrations</p>
+                        </div>
+                        <button class="auto-demo-btn gold-gradient-btn" id="runAutoDemoBtn" style="padding: 10px 20px; font-weight: 700; border-radius: 8px; border: none; background: linear-gradient(135deg, #F59E0B, #D97706); color: #fff; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(245,158,11,0.3); transition: all 0.3s ease;">
+                            <i class="fa-solid fa-play"></i> Run Full PocketSense AI Demonstration
+                        </button>
+                    </div>
+
+                    <!-- Top row: score card & demo controls -->
+                    <div class="judges-top-grid" style="display:grid; grid-template-columns: 2fr 1fr; gap:20px; margin-bottom:20px;">
+                        
+                        <!-- Compliance Scorecard -->
+                        <div class="control-card glassmorphism judges-scorecard-card" style="padding: 20px;">
+                            <h3>Capstone Compliance Scorecard</h3>
+                            <div class="compliance-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:16px;">
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Multi-Agent System</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> MCP Server Transport</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> 12 Platform MCP Tools</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Gemini Chaining Gateway</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Receipt OCR 2.0 (Vision)</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Predictive Forecast Curve</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Automated Risk Auditing</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Persistent Memory Profiles</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> CFO Report Generator</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Vercel Serverless Ready</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> XSS / Rate-Limit Shield</div>
+                                <div class="compliance-item passed" style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color: var(--success);"><i class="fa-solid fa-circle-check"></i> Offline Resilience Engine</div>
+                            </div>
+                        </div>
+
+                        <!-- One click demo buttons -->
+                        <div class="control-card glassmorphism demo-triggers-card" style="padding: 20px;">
+                            <h3>Live Agent Triggers</h3>
+                            <div class="demo-buttons-column" style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
+                                <button class="demo-trigger-btn" id="btn-demo-expense" style="padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; transition:0.2s;"><i class="fa-solid fa-arrow-trend-up" style="color:var(--accent);"></i> Add Expense Agent</button>
+                                <button class="demo-trigger-btn" id="btn-demo-budget" style="padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; transition:0.2s;"><i class="fa-solid fa-scale-balanced" style="color:var(--secondary);"></i> Budget Analysis Agent</button>
+                                <button class="demo-trigger-btn" id="btn-demo-risk" style="padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; transition:0.2s;"><i class="fa-solid fa-triangle-exclamation" style="color:var(--warning);"></i> Risk Check Agent</button>
+                                <button class="demo-trigger-btn" id="btn-demo-goal" style="padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; transition:0.2s;"><i class="fa-solid fa-bullseye" style="color:var(--success);"></i> Goal Planning Agent</button>
+                                <button class="demo-trigger-btn" id="btn-demo-receipt" style="padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; transition:0.2s;"><i class="fa-solid fa-receipt" style="color:var(--accent);"></i> Receipt OCR Agent</button>
+                                <button class="demo-trigger-btn" id="btn-demo-cfo" style="padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; transition:0.2s;"><i class="fa-solid fa-briefcase" style="color:var(--warning);"></i> CFO Executive Agent</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Flowchart visualization & Health Telemetry side-by-side -->
+                    <div class="judges-mid-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
+                        
+                        <!-- Flowchart Visualization -->
+                        <div class="control-card glassmorphism judges-flowchart-card" style="padding: 20px;">
+                            <h3>Chained Agent Routing Pipeline</h3>
+                            <p class="desc-para" style="margin-bottom:20px; font-size:12px; color:var(--text-sub);">Observe agent execution nodes highlight in real-time during demonstrations.</p>
+                            
+                            <div class="judges-routing-visualizer" style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 15px 0; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; background: rgba(0,0,0,0.15);">
+                                <div class="node-wrapper" style="display:flex; justify-content:center; width:100%;">
+                                    <div class="visual-node" id="visual-node-router" style="padding: 6px 12px; font-size:12px; border-radius: 20px; background: var(--card-bg); border: 2px solid rgba(255,255,255,0.1); display:flex; align-items:center; gap:6px; transition:all 0.3s ease;">
+                                        <i class="fa-solid fa-network-wired" style="color: var(--accent);"></i>
+                                        <strong>Router Agent</strong>
+                                    </div>
+                                </div>
+                                
+                                <div class="visual-arrows-row" style="display: flex; justify-content: space-around; width: 100%; height: 16px; position:relative;">
+                                    <i class="fa-solid fa-arrow-down" style="color:rgba(255,255,255,0.2); font-size:11px;"></i>
+                                </div>
+
+                                <div class="visual-agents-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; padding: 0 10px;">
+                                    <div class="visual-node" id="visual-node-goal" style="padding: 8px; border-radius: 8px; background: var(--card-bg); border: 2px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; transition:all 0.3s ease;">
+                                        <i class="fa-solid fa-bullseye" style="color: var(--success); font-size:14px;"></i>
+                                        <span style="font-size:10px; font-weight:600;">Goal Agent</span>
+                                    </div>
+                                    <div class="visual-node" id="visual-node-forecast" style="padding: 8px; border-radius: 8px; background: var(--card-bg); border: 2px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; transition:all 0.3s ease;">
+                                        <i class="fa-solid fa-chart-line" style="color: var(--secondary); font-size:14px;"></i>
+                                        <span style="font-size:10px; font-weight:600;">Forecast Agent</span>
+                                    </div>
+                                    <div class="visual-node" id="visual-node-risk" style="padding: 8px; border-radius: 8px; background: var(--card-bg); border: 2px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; transition:all 0.3s ease;">
+                                        <i class="fa-solid fa-triangle-exclamation" style="color: var(--warning); font-size:14px;"></i>
+                                        <span style="font-size:10px; font-weight:600;">Risk Agent</span>
+                                    </div>
+                                    <div class="visual-node" id="visual-node-advisor" style="padding: 8px; border-radius: 8px; background: var(--card-bg); border: 2px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; transition:all 0.3s ease;">
+                                        <i class="fa-solid fa-user-tie" style="color: var(--accent); font-size:14px;"></i>
+                                        <span style="font-size:10px; font-weight:600;">Advisor Agent</span>
+                                    </div>
+                                </div>
+
+                                <div class="visual-arrows-row" style="display: flex; justify-content: space-around; width: 100%; height: 16px;">
+                                    <i class="fa-solid fa-arrow-down" style="color:rgba(255,255,255,0.2); font-size:11px;"></i>
+                                </div>
+
+                                <div class="node-wrapper" style="display:flex; justify-content:center; width:100%;">
+                                    <div class="visual-node" id="visual-node-final" style="padding: 6px 12px; font-size:12px; border-radius: 20px; background: var(--card-bg); border: 2px solid rgba(255,255,255,0.1); display:flex; align-items:center; gap:6px; transition:all 0.3s ease;">
+                                        <i class="fa-solid fa-comment-dots" style="color: var(--success);"></i>
+                                        <strong>Final Response</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Agent Health Telemetry Dashboard -->
+                        <div class="control-card glassmorphism judges-health-card" style="padding: 20px;">
+                            <h3>Agent Health Telemetry Dashboard</h3>
+                            <div class="table-container" style="max-height: 185px; overflow-y:auto; margin-top:16px;">
+                                <table style="width:100%; font-size:12px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Agent Name</th>
+                                            <th>Status</th>
+                                            <th>Last Tool Used</th>
+                                            <th>Latency</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="judgesAgentHealthTable">
+                                        <!-- Dynamically filled with getHealth -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom row: MCP Tool Explorer -->
+                    <div class="control-card glassmorphism judges-mcp-explorer-card" style="padding: 20px; margin-bottom: 20px;">
+                        <h3>MCP Tool Explorer</h3>
+                        <p class="desc-para" style="margin-bottom: 16px; font-size:12px; color:var(--text-sub);">Observe live success rates, execution counts, and latency statistics for all 12 platform tools.</p>
+                        <div class="table-container" style="max-height: 250px; overflow-y:auto;">
+                            <table style="width:100%; font-size:12px;">
+                                <thead>
+                                    <tr>
+                                        <th>Tool API Name</th>
+                                        <th>Total Executions</th>
+                                        <th>Success Rate</th>
+                                        <th>Average Latency</th>
+                                        <th>Last Execution</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="judgesMcpExplorerTable">
+                                    <!-- Dynamic rows from toolsStats -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Expense Modal (Manual Addition) -->
+    <div class="modal-backdrop" id="addExpenseModal">
+        <div class="modal-content glassmorphism">
+            <div class="modal-header">
+                <h3>Log Outlay Transaction</h3>
+                <button class="modal-close-btn" id="closeAddModalBtn">&times;</button>
+            </div>
+            <form id="addExpenseForm" class="modal-form">
+                <div class="form-item">
+                    <label>Amount (₹)</label>
+                    <input type="number" id="add-amount" placeholder="0.00" step="any" required>
+                </div>
+                <div class="form-item">
+                    <label>Category</label>
+                    <select id="add-category" required>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Health">Health</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label>Description Note</label>
+                    <input type="text" id="add-note" placeholder="Walmart, Uber refuel, gym bill..." required>
+                </div>
+                <div class="form-item">
+                    <label>Transaction Date (Optional)</label>
+                    <input type="datetime-local" id="add-date">
+                </div>
+                <div class="modal-actions-row">
+                    <button type="button" class="secondary-btn" id="cancelAddModalBtn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Outlay</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Expense Modal (Manual Updates) -->
+    <div class="modal-backdrop" id="editExpenseModal">
+        <div class="modal-content glassmorphism">
+            <div class="modal-header">
+                <h3>Edit Outlay Details</h3>
+                <button class="modal-close-btn" id="closeEditModalBtn">&times;</button>
+            </div>
+            <form id="editExpenseForm" class="modal-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-item">
+                    <label>Amount (₹)</label>
+                    <input type="number" id="edit-amount" step="any" required>
+                </div>
+                <div class="form-item">
+                    <label>Category</label>
+                    <select id="edit-category" required>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Health">Health</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label>Description Note</label>
+                    <input type="text" id="edit-note" required>
+                </div>
+                <div class="form-item">
+                    <label>Transaction Date</label>
+                    <input type="datetime-local" id="edit-date" required>
+                </div>
+                <div class="modal-actions-row">
+                    <button type="button" class="secondary-btn" id="cancelEditModalBtn">Cancel</button>
+                    <button type="submit" class="primary-btn">Update Details</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Onboarding Tour Modal -->
+    <div class="modal-backdrop open" id="onboardingModal" style="z-index: 10000; background: rgba(4, 16, 27, 0.95); display: flex;">
+        <div class="modal-content glassmorphism" style="width: 600px; max-width: 95%; padding: 30px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);">
+            <div style="font-size: 40px; color: var(--accent); margin-bottom: 12px; filter: drop-shadow(0 0 10px rgba(0,212,255,0.4));">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 6px; background: linear-gradient(135deg, #FFF, var(--text-sub)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Welcome to PocketSense AI</h2>
+            <p style="color: var(--accent); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px;">Autonomous Financial Intelligence Platform</p>
+            
+            <div class="onboarding-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left; margin-bottom: 30px;">
+                <div class="onboard-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 10px;">
+                    <h4 style="font-size: 14px; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-robot" style="color:var(--accent);"></i> Multi-Agent Core</h4>
+                    <p style="font-size: 11px; color: var(--text-sub); line-height: 1.5;">Coordinated by the Router, specialized agents (Forecast, Risk, Goal, CFO) collaborate in parallel to analyze your assets.</p>
+                </div>
+                <div class="onboard-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 10px;">
+                    <h4 style="font-size: 14px; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-toolbox" style="color:var(--secondary);"></i> 12 MCP Tools</h4>
+                    <p style="font-size: 11px; color: var(--text-sub); line-height: 1.5;">Uses standard Model Context Protocol (MCP) servers to invoke tools like budget limits, transaction CRUD, and vision receipts.</p>
+                </div>
+                <div class="onboard-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 10px;">
+                    <h4 style="font-size: 14px; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-shield-heart" style="color:var(--success);"></i> AI Resilience Layer</h4>
+                    <p style="font-size: 11px; color: var(--text-sub); line-height: 1.5;">Enterprise AI Gateway catches 429 quota exceptions, automatically retrying and falling back to Offline Intelligence Mode.</p>
+                </div>
+                <div class="onboard-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 10px;">
+                    <h4 style="font-size: 14px; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-gavel" style="color:var(--warning);"></i> 60s Judges Mode</h4>
+                    <p style="font-size: 11px; color: var(--text-sub); line-height: 1.5;">A dedicated verification system featuring a 45-second Auto-Demo flow, live routing mapping, and execution log explorers.</p>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px; align-items:center;">
+                <button class="primary-btn" id="dismissOnboardingBtn" style="padding: 12px 30px; font-size: 13px; font-weight:600; width: 100%; max-width: 240px; border-radius: 20px;">Explore Platform</button>
+                <a href="#" id="onboardToJudgesLink" style="font-size: 11px; color: var(--accent); text-decoration: none; font-weight:500;">Jump straight to Judges Console &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

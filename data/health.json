@@ -1,0 +1,412 @@
+{
+  "aiStatus": "Degraded",
+  "demoMode": false,
+  "agents": {
+    "Router Agent": {
+      "status": "Offline Fallback",
+      "lastExecution": "2026-06-20T07:07:45.987Z",
+      "lastTool": "None",
+      "responseTime": 35
+    },
+    "Expense Agent": {
+      "status": "Healthy",
+      "lastExecution": "2026-06-20T07:05:08.344Z",
+      "lastTool": "addExpense",
+      "responseTime": 11
+    },
+    "Budget Agent": {
+      "status": "Healthy",
+      "lastExecution": "2026-06-20T07:05:15.028Z",
+      "lastTool": "getBudget",
+      "responseTime": 33
+    },
+    "Forecast Agent": {
+      "status": "Offline Fallback",
+      "lastExecution": "2026-06-20T07:07:45.990Z",
+      "lastTool": "forecastSpending",
+      "responseTime": 35
+    },
+    "Risk Agent": {
+      "status": "Offline Fallback",
+      "lastExecution": "2026-06-20T07:07:45.992Z",
+      "lastTool": "analyzeRisk",
+      "responseTime": 35
+    },
+    "Goal Agent": {
+      "status": "Offline Fallback",
+      "lastExecution": "2026-06-20T07:07:45.989Z",
+      "lastTool": "getGoals",
+      "responseTime": 35
+    },
+    "Receipt Agent": {
+      "status": "Healthy",
+      "lastExecution": "2026-06-20T06:59:53.998Z",
+      "lastTool": "scanReceipt",
+      "responseTime": 6502
+    },
+    "Advisor Agent": {
+      "status": "Offline Fallback",
+      "lastExecution": "2026-06-20T07:07:45.983Z",
+      "lastTool": "None",
+      "responseTime": 29858
+    },
+    "CFO Agent": {
+      "status": "Healthy",
+      "lastExecution": "2026-06-20T07:07:23.665Z",
+      "lastTool": "generateCFOExecutiveReport",
+      "responseTime": 42186
+    }
+  },
+  "mcpToolHistory": [
+    {
+      "timestamp": "2026-06-20T07:06:46.025Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 4540
+    },
+    {
+      "timestamp": "2026-06-20T07:05:43.690Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 7546
+    },
+    {
+      "timestamp": "2026-06-20T07:05:41.539Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 5463
+    },
+    {
+      "timestamp": "2026-06-20T07:05:21.963Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 11
+    },
+    {
+      "timestamp": "2026-06-20T07:05:15.526Z",
+      "tool": "getGoals",
+      "params": "{}",
+      "status": "Success",
+      "duration": 3
+    },
+    {
+      "timestamp": "2026-06-20T07:05:15.100Z",
+      "tool": "analyzeRisk",
+      "params": "{}",
+      "status": "Success",
+      "duration": 4
+    },
+    {
+      "timestamp": "2026-06-20T07:05:15.017Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 16
+    },
+    {
+      "timestamp": "2026-06-20T07:05:14.876Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 81
+    },
+    {
+      "timestamp": "2026-06-20T07:05:14.695Z",
+      "tool": "forecastSpending",
+      "params": "{}",
+      "status": "Success",
+      "duration": 7
+    },
+    {
+      "timestamp": "2026-06-20T07:05:14.629Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 19
+    },
+    {
+      "timestamp": "2026-06-20T07:05:08.341Z",
+      "tool": "addExpense",
+      "params": "{\"amount\":450,\"category\":\"Food\",\"note\":\"Receipt: Starbucks Coffee (Caffe Latte, Chocolate Croissant)\"}",
+      "status": "Success",
+      "duration": 6
+    },
+    {
+      "timestamp": "2026-06-20T07:04:59.484Z",
+      "tool": "getGoals",
+      "params": "{}",
+      "status": "Success",
+      "duration": 1
+    },
+    {
+      "timestamp": "2026-06-20T07:04:58.965Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 20
+    },
+    {
+      "timestamp": "2026-06-20T07:04:58.945Z",
+      "tool": "analyzeRisk",
+      "params": "{}",
+      "status": "Success",
+      "duration": 4
+    },
+    {
+      "timestamp": "2026-06-20T07:04:58.916Z",
+      "tool": "forecastSpending",
+      "params": "{}",
+      "status": "Success",
+      "duration": 6
+    },
+    {
+      "timestamp": "2026-06-20T07:04:58.818Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 6
+    },
+    {
+      "timestamp": "2026-06-20T07:04:58.414Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 16
+    },
+    {
+      "timestamp": "2026-06-20T07:04:49.199Z",
+      "tool": "getGoals",
+      "params": "{}",
+      "status": "Success",
+      "duration": 2
+    },
+    {
+      "timestamp": "2026-06-20T07:04:46.920Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 9
+    },
+    {
+      "timestamp": "2026-06-20T07:04:46.871Z",
+      "tool": "forecastSpending",
+      "params": "{}",
+      "status": "Success",
+      "duration": 11
+    },
+    {
+      "timestamp": "2026-06-20T07:04:46.708Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 88
+    },
+    {
+      "timestamp": "2026-06-20T07:04:46.250Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 59
+    },
+    {
+      "timestamp": "2026-06-20T07:04:38.311Z",
+      "tool": "addExpense",
+      "params": "{\"amount\":12500,\"category\":\"Shopping\",\"note\":\"Demo MacBook Fund Deposit\"}",
+      "status": "Success",
+      "duration": 5
+    },
+    {
+      "timestamp": "2026-06-20T07:04:24.372Z",
+      "tool": "forecastSpending",
+      "params": "{}",
+      "status": "Success",
+      "duration": 7
+    },
+    {
+      "timestamp": "2026-06-20T07:04:24.365Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 36
+    },
+    {
+      "timestamp": "2026-06-20T07:04:24.340Z",
+      "tool": "getGoals",
+      "params": "{}",
+      "status": "Success",
+      "duration": 3
+    },
+    {
+      "timestamp": "2026-06-20T07:04:24.192Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 10
+    },
+    {
+      "timestamp": "2026-06-20T07:04:24.172Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 31
+    },
+    {
+      "timestamp": "2026-06-20T07:03:57.144Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 6468
+    },
+    {
+      "timestamp": "2026-06-20T07:03:56.236Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 5562
+    },
+    {
+      "timestamp": "2026-06-20T07:03:50.701Z",
+      "tool": "getGoals",
+      "params": "{}",
+      "status": "Success",
+      "duration": 5
+    },
+    {
+      "timestamp": "2026-06-20T07:03:50.682Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 7
+    },
+    {
+      "timestamp": "2026-06-20T07:00:05.189Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 11180
+    },
+    {
+      "timestamp": "2026-06-20T06:59:54.004Z",
+      "tool": "analyzeRisk",
+      "params": "{}",
+      "status": "Success",
+      "duration": 2
+    },
+    {
+      "timestamp": "2026-06-20T06:59:53.996Z",
+      "tool": "scanReceipt",
+      "params": "{\"image\":\"data:image&#x2F;jpeg;base64,L21vY2s=\",\"mimeType\":\"image&#x2F;jpeg\"}",
+      "status": "Success",
+      "duration": 6500
+    },
+    {
+      "timestamp": "2026-06-20T06:59:47.492Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 2
+    },
+    {
+      "timestamp": "2026-06-20T06:59:47.481Z",
+      "tool": "createGoal",
+      "params": "{\"title\":\"Audit Savings Goal\",\"targetAmount\":20000,\"targetDate\":\"2026-12-31\"}",
+      "status": "Success",
+      "duration": 137
+    },
+    {
+      "timestamp": "2026-06-20T06:59:47.340Z",
+      "tool": "getGoals",
+      "params": "{}",
+      "status": "Success",
+      "duration": 1
+    },
+    {
+      "timestamp": "2026-06-20T06:59:47.334Z",
+      "tool": "forecastSpending",
+      "params": "{}",
+      "status": "Success",
+      "duration": 1
+    },
+    {
+      "timestamp": "2026-06-20T06:59:47.326Z",
+      "tool": "addExpense",
+      "params": "{\"amount\":120,\"category\":\"Food\",\"note\":\"Tea\"}",
+      "status": "Success",
+      "duration": 2
+    },
+    {
+      "timestamp": "2026-06-20T06:59:47.320Z",
+      "tool": "getExpenses",
+      "params": "{\"page\":1,\"limit\":2,\"category\":\"all\",\"search\":\"\"}",
+      "status": "Success",
+      "duration": 1
+    },
+    {
+      "timestamp": "2026-06-20T06:59:40.827Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 6512
+    },
+    {
+      "timestamp": "2026-06-20T06:59:34.308Z",
+      "tool": "setBudget",
+      "params": "{\"globalLimit\":30000,\"categories\":{\"Food\":6000}}",
+      "status": "Success",
+      "duration": 2
+    },
+    {
+      "timestamp": "2026-06-20T06:59:34.301Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 1
+    },
+    {
+      "timestamp": "2026-06-20T06:59:27.760Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 6803
+    },
+    {
+      "timestamp": "2026-06-20T06:58:51.091Z",
+      "tool": "generateInsights",
+      "params": "{}",
+      "status": "Success",
+      "duration": 6588
+    },
+    {
+      "timestamp": "2026-06-20T06:58:44.500Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"weekly\"}",
+      "status": "Success",
+      "duration": 7274
+    },
+    {
+      "timestamp": "2026-06-20T06:58:37.223Z",
+      "tool": "getBudget",
+      "params": "{}",
+      "status": "Success",
+      "duration": 2
+    },
+    {
+      "timestamp": "2026-06-20T06:58:37.214Z",
+      "tool": "getExpenses",
+      "params": "{\"limit\":3}",
+      "status": "Success",
+      "duration": 2
+    },
+    {
+      "timestamp": "2026-06-20T06:54:02.811Z",
+      "tool": "getSummary",
+      "params": "{\"timeframe\":\"monthly\"}",
+      "status": "Success",
+      "duration": 8328
+    }
+  ]
+}

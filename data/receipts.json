@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "merchant": "Decathlon Sports Store",
+    "amount": 1450,
+    "category": "Shopping",
+    "items": "Running Shoes: ₹1200, Sports Water Bottle: ₹250",
+    "saved_at": "2026-06-20T06:29:23.943Z"
+  },
+  {
+    "id": 2,
+    "merchant": "Decathlon Sports Store",
+    "amount": 1450,
+    "category": "Shopping",
+    "items": "Running Shoes: ₹1200, Sports Water Bottle: ₹250",
+    "saved_at": "2026-06-20T06:45:40.834Z"
+  },
+  {
+    "id": 3,
+    "merchant": "Decathlon Sports Store",
+    "amount": 1450,
+    "category": "Shopping",
+    "items": "Running Shoes: ₹1200, Sports Water Bottle: ₹250",
+    "saved_at": "2026-06-20T06:49:57.413Z"
+  },
+  {
+    "id": 4,
+    "merchant": "Decathlon Sports Store",
+    "amount": 1450,
+    "category": "Shopping",
+    "items": "Running Shoes: ₹1200, Sports Water Bottle: ₹250",
+    "saved_at": "2026-06-20T06:59:53.994Z"
+  }
+]
