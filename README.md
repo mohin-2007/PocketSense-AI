@@ -3,6 +3,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Vercel-Live_Demo-black?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel Deployed" />
   <img src="https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository" />
+  <img src="https://img.shields.io/badge/License-CC_BY_4.0-lightgrey?style=for-the-badge" alt="License: CC-BY-4.0" />
   <img src="https://img.shields.io/badge/Gemini_2.5_Flash-centralized_AI-green?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini Powered" />
 </p>
 
@@ -11,8 +12,8 @@
 
 ---
 
-## 🏆 Kaggle & Google AI Agents Intensive Capstone Blueprint
-PocketSense AI is a production-grade, autonomous Multi-Agent Financial Intelligence Platform built from the ground up for the **Google × Kaggle AI Agents Intensive Capstone**. 
+## 🏆 Kaggle & Google: Vibecoding Agents - Capstone Project Blueprint
+PocketSense AI is a production-grade, autonomous Multi-Agent Financial Intelligence Platform built from the ground up for the Google **Vibecoding Agents - Capstone Project** competition on Kaggle. 
 
 Rather than a simple expense tracker, PocketSense AI is a **financial operating system** driven by 9 specialist agents, 12 Model Context Protocol (MCP) tools, Gemini intelligence, and a centralized resilience failover layer.
 
@@ -261,4 +262,4 @@ Add this server block to your Claude Desktop configuration file:
 ---
 
 ## 📄 License
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is dual-licensed under the **MIT License** and **Creative Commons Attribution 4.0 International (CC-BY 4.0)** — complying fully with the Google × Kaggle official competition guidelines. See the [LICENSE](LICENSE) file for details.
