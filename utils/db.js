@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, '../data');
+const isVercel = !!process.env.VERCEL;
+const ORIGINAL_DATA_DIR = path.join(__dirname, '../data');
+const DATA_DIR = isVercel ? '/tmp/pocketsense_data' : ORIGINAL_DATA_DIR;
 const BACKUP_DIR = path.join(DATA_DIR, 'backups');
 
 const FILES = {
@@ -11,6 +13,15 @@ const FILES = {
   settings: path.join(DATA_DIR, 'settings.json'),
   goals: path.join(DATA_DIR, 'goals.json'),
   health: path.join(DATA_DIR, 'health.json')
+};
+
+const ORIGINAL_FILES = {
+  expenses: path.join(ORIGINAL_DATA_DIR, 'expenses.json'),
+  budgets: path.join(ORIGINAL_DATA_DIR, 'budgets.json'),
+  receipts: path.join(ORIGINAL_DATA_DIR, 'receipts.json'),
+  settings: path.join(ORIGINAL_DATA_DIR, 'settings.json'),
+  goals: path.join(ORIGINAL_DATA_DIR, 'goals.json'),
+  health: path.join(ORIGINAL_DATA_DIR, 'health.json')
 };
 
 // Ensure directories exist
@@ -23,24 +34,42 @@ function ensureDirs() {
   }
 }
 
+// Copy seed files to /tmp when running on Vercel
+function ensureFileExists(collection) {
+  ensureDirs();
+  const filePath = FILES[collection];
+  if (!fs.existsSync(filePath)) {
+    const originalPath = ORIGINAL_FILES[collection];
+    if (fs.existsSync(originalPath)) {
+      try {
+        fs.copyFileSync(originalPath, filePath);
+      } catch (err) {
+        console.error(`Failed to copy seed file for ${collection} to /tmp:`, err);
+      }
+    } else {
+      const defaultContent = ['budgets', 'settings', 'health'].includes(collection) ? '{}' : '[]';
+      try {
+        fs.writeFileSync(filePath, defaultContent, 'utf8');
+      } catch (err) {
+        console.error(`Failed to write default file for ${collection}:`, err);
+      }
+    }
+  }
+}
+
 /**
  * Read data from a specific JSON file collection.
  * @param {string} collection - 'expenses' | 'budgets' | 'receipts' | 'settings' | 'goals'
  * @returns {any} Parse object or array.
  */
 function read(collection) {
-  ensureDirs();
   const filePath = FILES[collection];
   if (!filePath) {
     throw new Error(`Invalid database collection: ${collection}`);
   }
 
   try {
-    if (!fs.existsSync(filePath)) {
-      const defaultContent = ['budgets', 'settings', 'health'].includes(collection) ? '{}' : '[]';
-      fs.writeFileSync(filePath, defaultContent, 'utf8');
-      return JSON.parse(defaultContent);
-    }
+    ensureFileExists(collection);
     const content = fs.readFileSync(filePath, 'utf8');
     return JSON.parse(content || (['budgets', 'settings', 'health'].includes(collection) ? '{}' : '[]'));
   } catch (error) {
@@ -55,13 +84,13 @@ function read(collection) {
  * @param {any} data - Object or array.
  */
 function write(collection, data) {
-  ensureDirs();
   const filePath = FILES[collection];
   if (!filePath) {
     throw new Error(`Invalid database collection: ${collection}`);
   }
 
   try {
+    ensureDirs();
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
     return true;
   } catch (error) {
@@ -79,7 +108,9 @@ function backup() {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const backedUpFiles = [];
 
-  for (const [key, filePath] of Object.entries(FILES)) {
+  for (const key of Object.keys(FILES)) {
+    const filePath = FILES[key];
+    ensureFileExists(key);
     if (fs.existsSync(filePath)) {
       const backupPath = path.join(BACKUP_DIR, `${timestamp}_${key}.json`);
       try {
